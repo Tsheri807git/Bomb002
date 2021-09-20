@@ -1,0 +1,28 @@
+//Phase 1//
+use gdb and set up break point:
+
+(gdb) b phase_1
+	Breakpoint 1 at 0x400ef0
+(gdb) r
+Starting program: /home/chh/bomb8/bomb 
+    Welcome to my fiendish little bomb. You have 6 phases with
+    which to blow yourself up. Have a nice day!
+    hello                                                       //first give any input to check and if the input is wrong, bomb will explode but here the wrong input will get                                                                       inside the break point.
+
+    Breakpoint 1, 0x0000000000400ef0 in phase_1 ()
+    (gdb) disas
+    Dump of assembler code for function phase_1:
+    400e8d:	48 83 ec 08          	sub    $0x8,%rsp
+	400e91:	be cc 23 40 00       	mov    $0x4023cc,%esi      //convert this hexa into string
+	400e96:	e8 9e 04 00 00       	callq  401339 <strings_not_equal>
+	400e9b:	85 c0                	test   %eax,%eax
+	400e9d:	74 05                	je     400ea4 <phase_1+0x17>
+	400e9f:	e8 94 05 00 00       	callq  401438 <explode_bomb>
+	400ea4:	48 83 c4 08          	add    $0x8,%rsp
+	400ea8:	c3                   	retq   
+
+	(gdb) x/s 0x4023cc                              //converts into string bby using '/s'
+	0x4023cc : 		"Public speaking is very easy."
+
+
+	So solution is Public speaking is very easy.
